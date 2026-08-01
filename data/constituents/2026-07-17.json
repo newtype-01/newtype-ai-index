@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "index_name": "newtype AI Index",
+    "index_ticker": "NTAI",
+    "as_of": "2026-07-19",
+    "effective_date": "2026-07-17",
+    "effective_date_note": "2026-07-19 is a Sunday. Index uses 2026-07-17 (the last trading day before the baseline as_of date) as the inception NAV reference.",
+    "framework": "newtype AI Stack seven-layer",
+    "source_baseline": "https://github.com/newtype-01/ai-signal-system/blob/main/reports/baseline-2026-07-19.md",
+    "source_universe": "https://github.com/newtype-01/ai-signal-system/blob/main/config/universe.json",
+    "disclaimer": "Research-only. Not personalized investment advice. Not a buy or sell signal. Weights are model targets, not actual holdings."
+  },
+  "constituents": [
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "primary_layer": 4,
+      "layer_name": "Compute Hardware",
+      "tier": "Core",
+      "weight": 0.22,
+      "scarcity": "core_scarcity",
+      "shovel_vs_gold": "shovel",
+      "endgame_view": "endgame_candidate"
+    },
+    {
+      "ticker": "MU",
+      "name": "Micron Technology, Inc.",
+      "primary_layer": 3,
+      "layer_name": "Interconnect & Memory",
+      "tier": "Core",
+      "weight": 0.22,
+      "scarcity": "secondary_scarcity",
+      "shovel_vs_gold": "shovel",
+      "endgame_view": "cyclical_bridge"
+    },
+    {
+      "ticker": "VRT",
+      "name": "Vertiv Holdings Co",
+      "primary_layer": 2,
+      "layer_name": "Infrastructure",
+      "tier": "Core",
+      "weight": 0.22,
+      "scarcity": "secondary_scarcity",
+      "shovel_vs_gold": "shovel",
+      "endgame_view": "endgame_candidate"
+    },
+    {
+      "ticker": "CEG",
+      "name": "Constellation Energy Corporation",
+      "primary_layer": 1,
+      "layer_name": "Energy",
+      "tier": "N-Stack",
+      "weight": 0.12,
+      "scarcity": "secondary_scarcity",
+      "shovel_vs_gold": "shovel",
+      "endgame_view": "endgame_candidate"
+    },
+    {
+      "ticker": "TSM",
+      "name": "Taiwan Semiconductor Manufacturing Company",
+      "primary_layer": 4,
+      "layer_name": "Compute Hardware",
+      "tier": "Bridge",
+      "weight": 0.10,
+      "scarcity": "core_scarcity",
+      "shovel_vs_gold": "shovel",
+      "endgame_view": "endgame_candidate",
+      "note": "Baseline universe marks TSM as Watch tier with 0-8% range; Index includes it as a Bridge position (10%) to reflect its core scarcity as the physical manufacturing base for AI compute."
+    },
+    {
+      "ticker": "MRVL",
+      "name": "Marvell Technology, Inc.",
+      "primary_layer": 4,
+      "layer_name": "Compute Hardware",
+      "tier": "N-Stack",
+      "weight": 0.06,
+      "scarcity": "secondary_scarcity",
+      "shovel_vs_gold": "shovel",
+      "endgame_view": "uncertain"
+    },
+    {
+      "ticker": "NBIS",
+      "name": "Nebius Group N.V.",
+      "primary_layer": 5,
+      "layer_name": "Cloud / IaaS",
+      "tier": "N-Stack",
+      "weight": 0.06,
+      "scarcity": "replaceable",
+      "shovel_vs_gold": "between",
+      "endgame_view": "bridge"
+    }
+  ],
+  "totals": {
+    "constituent_count": 7,
+    "total_weight": 1.00,
+    "layer_coverage": [1, 2, 3, 4, 5],
+    "core_weight": 0.66,
+    "n_stack_weight": 0.24,
+    "bridge_weight": 0.10
+  }
+}
