@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>newtype AI Index — 嵌入示例</title>
+  <style>
+    body {
+      background: #0e1116;
+      color: #e0e2e6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+      margin: 0;
+      padding: 32px 24px;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* ---- Index widget styles ---- */
+    .ntai-widget {
+      background: #0e1116;
+      color: #e0e2e6;
+      border: 1px solid #22262d;
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .ntai-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .ntai-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #f0f2f5;
+      margin: 0;
+    }
+    .ntai-updated {
+      font-size: 12px;
+      color: #6b6f76;
+    }
+    .ntai-headline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .ntai-stat {
+      background: #14181f;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .ntai-stat-label {
+      font-size: 11px;
+      color: #a0a4ab;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .ntai-stat-value {
+      font-size: 22px;
+      font-weight: 600;
+      color: #f0f2f5;
+      font-variant-numeric: tabular-nums;
+    }
+    .ntai-stat-value.pos { color: #4caf50; }
+    .ntai-stat-value.neg { color: #e57373; }
+    .ntai-chart-wrap {
+      position: relative;
+      height: 380px;
+    }
+    .ntai-footer {
+      margin-top: 16px;
+      font-size: 11px;
+      color: #6b6f76;
+      text-align: right;
+    }
+    .ntai-footer a {
+      color: #6b6f76;
+      text-decoration: none;
+      border-bottom: 1px dotted #6b6f76;
+    }
+    .ntai-loading {
+      text-align: center;
+      color: #6b6f76;
+      padding: 40px 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="ntai-widget" class="ntai-widget">
+    <div class="ntai-loading">Loading newtype AI Index…</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    /**
+     * newtype AI Index — embeddable widget
+     *
+     * Fetches https://raw.githubusercontent.com/newtype-01/newtype-ai-index/main/data/api/latest.json
+     * and renders headline stats + NAV comparison chart.
+     *
+     * To embed on your site:
+     *   1. Copy the <style> block and the <div id="ntai-widget"> container.
+     *   2. Include Chart.js from CDN.
+     *   3. Include this script (or copy it inline).
+     *
+     * No API keys, no build step, no framework required.
+     */
+    (function () {
+      const DATA_URL = "https://raw.githubusercontent.com/newtype-01/newtype-ai-index/main/data/api/latest.json";
+      const container = document.getElementById("ntai-widget");
+
+      function fmtPct(v) {
+        const sign = v > 0 ? "+" : "";
+        return `${sign}${v.toFixed(2)}%`;
+      }
+      function fmtPP(v) {
+        const sign = v > 0 ? "+" : "";
+        return `${sign}${v.toFixed(2)}pp`;
+      }
+      function cls(v) {
+        return v > 0 ? "pos" : v < 0 ? "neg" : "";
+      }
+
+      function render(data) {
+        const soxx = data.benchmarks.SOXX;
+        const qqq = data.benchmarks.QQQ;
+
+        container.innerHTML = `
+          <div class="ntai-header">
+            <h3 class="ntai-title">newtype AI Index (NTAI)</h3>
+            <div class="ntai-updated">截至 ${data.latest_date} · 起始 ${data.inception_date}</div>
+          </div>
+          <div class="ntai-headline">
+            <div class="ntai-stat">
+              <div class="ntai-stat-label">NTAI 净值</div>
+              <div class="ntai-stat-value">${data.latest_nav.toFixed(4)}</div>
+            </div>
+            <div class="ntai-stat">
+              <div class="ntai-stat-label">期间收益</div>
+              <div class="ntai-stat-value ${cls(data.period_return_pct)}">${fmtPct(data.period_return_pct)}</div>
+            </div>
+            <div class="ntai-stat">
+              <div class="ntai-stat-label">相对 SOXX</div>
+              <div class="ntai-stat-value ${cls(soxx.excess_pp)}">${fmtPP(soxx.excess_pp)}</div>
+            </div>
+            <div class="ntai-stat">
+              <div class="ntai-stat-label">相对 QQQ</div>
+              <div class="ntai-stat-value ${cls(qqq.excess_pp)}">${fmtPP(qqq.excess_pp)}</div>
+            </div>
+          </div>
+          <div class="ntai-chart-wrap"><canvas id="ntai-chart"></canvas></div>
+          <div class="ntai-footer">
+            数据源:<a href="${data.source}" target="_blank" rel="noopener">${data.source.replace(/^https?:\/\//, "")}</a>
+            · 研究工具,非投资建议
+          </div>
+        `;
+
+        const ctx = document.getElementById("ntai-chart").getContext("2d");
+        const labels = data.series.map((r) => r.date);
+        const ntai = data.series.map((r) => r.ntai);
+        const soxxSeries = data.series.map((r) => r.soxx);
+        const qqqSeries = data.series.map((r) => r.qqq);
+
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "NTAI",
+                data: ntai,
+                borderColor: "#e6b800",
+                backgroundColor: "rgba(230, 184, 0, 0.05)",
+                borderWidth: 2.4,
+                tension: 0.15,
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                fill: false,
+              },
+              {
+                label: "SOXX",
+                data: soxxSeries,
+                borderColor: "#4aa3df",
+                borderWidth: 1.6,
+                tension: 0.15,
+                pointRadius: 0,
+                pointHoverRadius: 3,
+                fill: false,
+              },
+              {
+                label: "QQQ",
+                data: qqqSeries,
+                borderColor: "#8e8e93",
+                borderWidth: 1.6,
+                tension: 0.15,
+                pointRadius: 0,
+                pointHoverRadius: 3,
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: "index", intersect: false },
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: { color: "#e0e2e6", font: { size: 11 }, boxWidth: 12 },
+              },
+              tooltip: {
+                backgroundColor: "#14181f",
+                titleColor: "#f0f2f5",
+                bodyColor: "#e0e2e6",
+                borderColor: "#22262d",
+                borderWidth: 1,
+                callbacks: {
+                  label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}`,
+                },
+              },
+            },
+            scales: {
+              x: {
+                grid: { color: "#22262d" },
+                ticks: { color: "#a0a4ab", font: { size: 10 }, maxRotation: 0 },
+              },
+              y: {
+                grid: { color: "#22262d" },
+                ticks: {
+                  color: "#a0a4ab",
+                  font: { size: 10 },
+                  callback: (v) => v.toFixed(0),
+                },
+              },
+            },
+          },
+        });
+      }
+
+      fetch(DATA_URL, { cache: "no-cache" })
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+        .then(render)
+        .catch((err) => {
+          container.innerHTML = `<div class="ntai-loading">加载失败:${err.message}</div>`;
+          console.error(err);
+        });
+    })();
+  </script>
+</body>
+</html>

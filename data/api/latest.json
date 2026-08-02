@@ -1,0 +1,92 @@
+{
+  "index_name": "newtype AI Index",
+  "index_ticker": "NTAI",
+  "inception_date": "2026-07-17",
+  "base_nav": 100.0,
+  "latest_date": "2026-07-31",
+  "latest_nav": 96.492,
+  "period_return_pct": -3.51,
+  "benchmarks": {
+    "SOXX": {
+      "latest": 96.7574,
+      "period_return_pct": -3.24,
+      "excess_pp": -0.27
+    },
+    "QQQ": {
+      "latest": 98.9444,
+      "period_return_pct": -1.06,
+      "excess_pp": -2.45
+    }
+  },
+  "series": [
+    {
+      "date": "2026-07-17",
+      "ntai": 100.0,
+      "soxx": 100.0,
+      "qqq": 100.0
+    },
+    {
+      "date": "2026-07-20",
+      "ntai": 101.1554,
+      "soxx": 100.4465,
+      "qqq": 100.105
+    },
+    {
+      "date": "2026-07-21",
+      "ntai": 107.8423,
+      "soxx": 105.9179,
+      "qqq": 101.9617
+    },
+    {
+      "date": "2026-07-22",
+      "ntai": 108.4678,
+      "soxx": 106.4602,
+      "qqq": 101.441
+    },
+    {
+      "date": "2026-07-23",
+      "ntai": 109.0587,
+      "soxx": 105.64,
+      "qqq": 99.5153
+    },
+    {
+      "date": "2026-07-24",
+      "ntai": 104.0505,
+      "soxx": 100.9965,
+      "qqq": 98.4036
+    },
+    {
+      "date": "2026-07-27",
+      "ntai": 101.7101,
+      "soxx": 98.9306,
+      "qqq": 98.1002
+    },
+    {
+      "date": "2026-07-28",
+      "ntai": 96.5933,
+      "soxx": 94.1837,
+      "qqq": 97.1467
+    },
+    {
+      "date": "2026-07-29",
+      "ntai": 88.5781,
+      "soxx": 89.1129,
+      "qqq": 95.1678
+    },
+    {
+      "date": "2026-07-30",
+      "ntai": 95.9542,
+      "soxx": 96.6884,
+      "qqq": 98.3058
+    },
+    {
+      "date": "2026-07-31",
+      "ntai": 96.492,
+      "soxx": 96.7574,
+      "qqq": 98.9444
+    }
+  ],
+  "updated_at_utc": "2026-08-02T09:17:37Z",
+  "source": "https://github.com/newtype-01/newtype-ai-index",
+  "disclaimer": "Research-only. Not investment advice. Weights are model targets, not actual holdings."
+}

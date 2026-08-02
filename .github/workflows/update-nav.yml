@@ -1,0 +1,59 @@
+name: Update NAV
+
+on:
+  schedule:
+    # Runs at 21:30 UTC every weekday (US market closes 20:00-21:00 UTC).
+    # Cron in UTC. Days: Mon-Fri (1-5). Add Saturday to catch late Friday data.
+    - cron: "30 21 * * 1-6"
+  workflow_dispatch:  # allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance pandas matplotlib
+
+      - name: Fetch latest prices
+        run: python scripts/fetch_prices.py
+
+      - name: Calculate NAV
+        run: python scripts/calculate_nav.py
+
+      - name: Generate chart
+        run: python scripts/generate_chart.py
+
+      - name: Export JSON for website
+        run: python scripts/export_json.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "newtype-index-bot"
+          git config user.email "bot@newtype.pro"
+          git add data/prices/close_prices.csv \
+                  data/nav/daily.csv \
+                  data/nav/monthly.csv \
+                  data/benchmarks/comparison.csv \
+                  data/api/latest.json \
+                  data/api/constituents.json \
+                  charts/nav-comparison.png
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            LATEST=$(python -c "import json; d=json.load(open('data/api/latest.json')); print(f\"{d['latest_date']} NAV={d['latest_nav']:.4f}\")")
+            git commit -m "auto: update NAV data (${LATEST})"
+            git push
+          fi
