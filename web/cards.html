@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>newtype AI Index — 公司卡片</title>
+  <style>
+    body {
+      background: #0e1116;
+      color: #e0e2e6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+      margin: 0;
+      padding: 32px 24px;
+      max-width: 1080px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* ---- Constituent cards styles ---- */
+    .ntai-cards-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .ntai-cards-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #f0f2f5;
+      margin: 0;
+    }
+    .ntai-cards-meta {
+      font-size: 12px;
+      color: #6b6f76;
+    }
+    .ntai-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .ntai-card {
+      background: #14181f;
+      border: 1px solid #22262d;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .ntai-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .ntai-card-ident {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .ntai-card-ticker {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f0f2f5;
+      letter-spacing: 0.5px;
+      font-variant-numeric: tabular-nums;
+    }
+    .ntai-card-name {
+      font-size: 12px;
+      color: #a0a4ab;
+      line-height: 1.3;
+    }
+    .ntai-card-price {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .ntai-card-price-value {
+      font-size: 17px;
+      font-weight: 600;
+      color: #f0f2f5;
+      font-variant-numeric: tabular-nums;
+    }
+    .ntai-card-price-change {
+      font-size: 12px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+    .ntai-card-price-change.pos { color: #4caf50; }
+    .ntai-card-price-change.neg { color: #e57373; }
+    .ntai-card-price-change.flat { color: #a0a4ab; }
+    .ntai-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .ntai-tag {
+      font-size: 10.5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #1c2129;
+      color: #c5c8cc;
+      border: 1px solid #2a2f38;
+      font-weight: 500;
+    }
+    .ntai-tag.tier-core { border-color: #7a5a00; color: #e6b800; background: rgba(230, 184, 0, 0.06); }
+    .ntai-tag.tier-nstack { border-color: #2e4b6a; color: #7dbde8; background: rgba(74, 163, 223, 0.06); }
+    .ntai-tag.tier-bridge { border-color: #5a3a5a; color: #d896d8; background: rgba(216, 150, 216, 0.06); }
+    .ntai-card-weight-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ntai-card-weight-label {
+      font-size: 11px;
+      color: #a0a4ab;
+      min-width: 32px;
+    }
+    .ntai-card-weight-track {
+      flex: 1;
+      height: 6px;
+      background: #1c2129;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .ntai-card-weight-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #e6b800 0%, #d4a600 100%);
+      border-radius: 3px;
+    }
+    .ntai-card-weight-value {
+      font-size: 12px;
+      font-weight: 600;
+      color: #f0f2f5;
+      font-variant-numeric: tabular-nums;
+      min-width: 36px;
+      text-align: right;
+    }
+    .ntai-card-role {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #d0d4d8;
+      margin: 0;
+    }
+    .ntai-card-section {
+      border-top: 1px solid #22262d;
+      padding-top: 10px;
+    }
+    .ntai-card-section-label {
+      font-size: 10px;
+      color: #6b6f76;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 5px;
+    }
+    .ntai-card-section-body {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #b8bcc0;
+    }
+    .ntai-cards-footer {
+      margin-top: 20px;
+      font-size: 11px;
+      color: #6b6f76;
+      text-align: right;
+    }
+    .ntai-cards-footer a {
+      color: #6b6f76;
+      text-decoration: none;
+      border-bottom: 1px dotted #6b6f76;
+    }
+    .ntai-loading {
+      text-align: center;
+      color: #6b6f76;
+      padding: 40px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="ntai-cards-header">
+    <h3 class="ntai-cards-title">Index 成分卡片</h3>
+    <div id="ntai-cards-meta" class="ntai-cards-meta"></div>
+  </div>
+  <div id="ntai-cards-grid" class="ntai-cards-grid">
+    <div class="ntai-loading">Loading constituents…</div>
+  </div>
+  <div id="ntai-cards-footer" class="ntai-cards-footer"></div>
+
+  <script>
+    /**
+     * newtype AI Index — Constituent cards widget
+     *
+     * Fetches https://raw.githubusercontent.com/newtype-01/newtype-ai-index/main/data/api/constituents.json
+     * and renders one card per constituent (ticker, weight, layer/tier tags, role, watch reason, live price).
+     *
+     * To embed on your site:
+     *   1. Copy the <style> block and both grid + footer containers.
+     *   2. Include this script (or copy it inline).
+     *
+     * No API keys, no build step, no framework required.
+     */
+    (function () {
+      const DATA_URL = "https://raw.githubusercontent.com/newtype-01/newtype-ai-index/main/data/api/constituents.json";
+      const grid = document.getElementById("ntai-cards-grid");
+      const metaEl = document.getElementById("ntai-cards-meta");
+      const footerEl = document.getElementById("ntai-cards-footer");
+
+      const SCARCITY_LABEL = {
+        core_scarcity: "核心稀缺",
+        secondary_scarcity: "次级稀缺",
+        replaceable: "可替代",
+      };
+      const SHOVEL_LABEL = {
+        shovel: "卖铲人",
+        between: "铲金之间",
+        gold: "淘金者",
+      };
+      const ENDGAME_LABEL = {
+        endgame_candidate: "终局候选",
+        cyclical_bridge: "周期性桥梁",
+        bridge: "桥梁位",
+        uncertain: "终局不定",
+      };
+
+      function fmtPct(v) {
+        if (v === null || v === undefined) return "—";
+        const sign = v > 0 ? "+" : "";
+        return `${sign}${v.toFixed(2)}%`;
+      }
+      function cls(v) {
+        if (v === null || v === undefined) return "flat";
+        return v > 0 ? "pos" : v < 0 ? "neg" : "flat";
+      }
+      function tierClass(tier) {
+        const t = (tier || "").toLowerCase();
+        if (t.includes("core")) return "tier-core";
+        if (t.includes("bridge")) return "tier-bridge";
+        return "tier-nstack";
+      }
+
+      function renderCard(c) {
+        const weightPct = (c.weight * 100).toFixed(0);
+        const tags = [
+          `<span class="ntai-tag ${tierClass(c.tier)}">${c.tier}</span>`,
+          `<span class="ntai-tag">L${c.primary_layer} · ${c.layer_name}</span>`,
+        ];
+        if (SCARCITY_LABEL[c.scarcity]) {
+          tags.push(`<span class="ntai-tag">${SCARCITY_LABEL[c.scarcity]}</span>`);
+        }
+        if (SHOVEL_LABEL[c.shovel_vs_gold]) {
+          tags.push(`<span class="ntai-tag">${SHOVEL_LABEL[c.shovel_vs_gold]}</span>`);
+        }
+        if (ENDGAME_LABEL[c.endgame_view]) {
+          tags.push(`<span class="ntai-tag">${ENDGAME_LABEL[c.endgame_view]}</span>`);
+        }
+
+        const priceHtml = c.latest_price != null
+          ? `
+            <div class="ntai-card-price">
+              <div class="ntai-card-price-value">$${c.latest_price.toFixed(2)}</div>
+              <div class="ntai-card-price-change ${cls(c.day_change_pct)}">${fmtPct(c.day_change_pct)}</div>
+            </div>
+          `
+          : "";
+
+        const noteHtml = c.note
+          ? `
+            <div class="ntai-card-section">
+              <div class="ntai-card-section-label">Index 备注</div>
+              <div class="ntai-card-section-body">${c.note}</div>
+            </div>
+          `
+          : "";
+
+        return `
+          <div class="ntai-card">
+            <div class="ntai-card-top">
+              <div class="ntai-card-ident">
+                <div class="ntai-card-ticker">${c.ticker}</div>
+                <div class="ntai-card-name">${c.name}</div>
+              </div>
+              ${priceHtml}
+            </div>
+            <div class="ntai-card-weight-bar">
+              <div class="ntai-card-weight-label">权重</div>
+              <div class="ntai-card-weight-track">
+                <div class="ntai-card-weight-fill" style="width: ${Math.min(100, weightPct * 2)}%"></div>
+              </div>
+              <div class="ntai-card-weight-value">${weightPct}%</div>
+            </div>
+            <div class="ntai-card-tags">${tags.join("")}</div>
+            ${c.role ? `<p class="ntai-card-role">${c.role}</p>` : ""}
+            ${c.watch_reason ? `
+              <div class="ntai-card-section">
+                <div class="ntai-card-section-label">观察维度</div>
+                <div class="ntai-card-section-body">${c.watch_reason}</div>
+              </div>
+            ` : ""}
+            ${noteHtml}
+          </div>
+        `;
+      }
+
+      function render(data) {
+        const snap = data.price_snapshot || {};
+        metaEl.textContent = `生效日 ${data.meta.effective_date}${snap.latest_date ? ` · 价格截至 ${snap.latest_date}` : ""}`;
+        grid.innerHTML = data.constituents.map(renderCard).join("");
+        footerEl.innerHTML = `
+          共 ${data.constituents.length} 只成分 · 权重合计 ${(data.totals.total_weight * 100).toFixed(0)}%
+          · 数据源:<a href="https://github.com/newtype-01/newtype-ai-index" target="_blank" rel="noopener">github.com/newtype-01/newtype-ai-index</a>
+        `;
+      }
+
+      fetch(DATA_URL, { cache: "no-cache" })
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+        .then(render)
+        .catch((err) => {
+          grid.innerHTML = `<div class="ntai-loading">加载失败:${err.message}</div>`;
+          console.error(err);
+        });
+    })();
+  </script>
+</body>
+</html>

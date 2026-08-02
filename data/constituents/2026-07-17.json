@@ -20,7 +20,14 @@
       "weight": 0.22,
       "scarcity": "core_scarcity",
       "shovel_vs_gold": "shovel",
-      "endgame_view": "endgame_candidate"
+      "endgame_view": "endgame_candidate",
+      "role": "GPU算力硬件核心，定义加速计算与互联架构",
+      "watch_reason": "数据中心收入、毛利率、下一季度指引是算力层最直接温度计",
+      "stack_layers": [
+        4,
+        3,
+        5
+      ]
     },
     {
       "ticker": "MU",
@@ -31,7 +38,12 @@
       "weight": 0.22,
       "scarcity": "secondary_scarcity",
       "shovel_vs_gold": "shovel",
-      "endgame_view": "cyclical_bridge"
+      "endgame_view": "cyclical_bridge",
+      "role": "HBM / DRAM存储，AI内存瓶颈环节",
+      "watch_reason": "HBM供需是核心假设；最大风险是市场发现HBM不再稀缺，估值从AI基建股回落到存储周期股",
+      "stack_layers": [
+        3
+      ]
     },
     {
       "ticker": "VRT",
@@ -42,7 +54,12 @@
       "weight": 0.22,
       "scarcity": "secondary_scarcity",
       "shovel_vs_gold": "shovel",
-      "endgame_view": "endgame_candidate"
+      "endgame_view": "endgame_candidate",
+      "role": "数据中心供配电与液冷基础设施",
+      "watch_reason": "订单积压与book-to-bill反映数据中心落地节奏",
+      "stack_layers": [
+        2
+      ]
     },
     {
       "ticker": "CEG",
@@ -53,7 +70,12 @@
       "weight": 0.12,
       "scarcity": "secondary_scarcity",
       "shovel_vs_gold": "shovel",
-      "endgame_view": "endgame_candidate"
+      "endgame_view": "endgame_candidate",
+      "role": "核电与电力供应，数据中心PPA对手方",
+      "watch_reason": "电力是最长扩产周期（5-15年）的物理瓶颈，过渡期红利与并网约束并存",
+      "stack_layers": [
+        1
+      ]
     },
     {
       "ticker": "TSM",
@@ -61,11 +83,17 @@
       "primary_layer": 4,
       "layer_name": "Compute Hardware",
       "tier": "Bridge",
-      "weight": 0.10,
+      "weight": 0.1,
       "scarcity": "core_scarcity",
       "shovel_vs_gold": "shovel",
       "endgame_view": "endgame_candidate",
-      "note": "Baseline universe marks TSM as Watch tier with 0-8% range; Index includes it as a Bridge position (10%) to reflect its core scarcity as the physical manufacturing base for AI compute."
+      "note": "Baseline universe marks TSM as Watch tier with 0-8% range; Index includes it as a Bridge position (10%) to reflect its core scarcity as the physical manufacturing base for AI compute.",
+      "role": "先进制程与先进封装（CoWoS/SoIC）制造底座",
+      "watch_reason": "AI芯片能否继续放量的物理约束；HPC收入占比与CoWoS供需是先行信号（本次未取finance基线，需补研）",
+      "stack_layers": [
+        4,
+        3
+      ]
     },
     {
       "ticker": "MRVL",
@@ -76,7 +104,13 @@
       "weight": 0.06,
       "scarcity": "secondary_scarcity",
       "shovel_vs_gold": "shovel",
-      "endgame_view": "uncertain"
+      "endgame_view": "uncertain",
+      "role": "定制ASIC与光互联/DSP，云厂商自研芯片合作方",
+      "watch_reason": "自研ASIC与CPO/光互联路线切换的直接受益或受损方",
+      "stack_layers": [
+        4,
+        3
+      ]
     },
     {
       "ticker": "NBIS",
@@ -87,15 +121,26 @@
       "weight": 0.06,
       "scarcity": "replaceable",
       "shovel_vs_gold": "between",
-      "endgame_view": "bridge"
+      "endgame_view": "bridge",
+      "role": "Neo-cloud算力租赁，高弹性算力服务",
+      "watch_reason": "高弹性过渡期资产，商业模式可能被Hyperscaler收回；核心逻辑是算力短缺与大客户长期合同",
+      "stack_layers": [
+        5
+      ]
     }
   ],
   "totals": {
     "constituent_count": 7,
-    "total_weight": 1.00,
-    "layer_coverage": [1, 2, 3, 4, 5],
+    "total_weight": 1.0,
+    "layer_coverage": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
     "core_weight": 0.66,
     "n_stack_weight": 0.24,
-    "bridge_weight": 0.10
+    "bridge_weight": 0.1
   }
 }

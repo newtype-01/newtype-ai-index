@@ -24,9 +24,24 @@ ROOT = Path(__file__).resolve().parent.parent
 COMPARISON = ROOT / "data" / "benchmarks" / "comparison.csv"
 DAILY_NAV = ROOT / "data" / "nav" / "daily.csv"
 CONSTITUENTS_DIR = ROOT / "data" / "constituents"
+PRICES_FILE = ROOT / "data" / "prices" / "close_prices.csv"
 API_DIR = ROOT / "data" / "api"
 
 BASE_NAV = 100.0
+
+
+def load_prices() -> tuple[list[str], dict[str, dict[str, float]]]:
+    """Return (sorted_date_strings, {ticker: {date_str: close}})."""
+    prices: dict[str, dict[str, float]] = {}
+    dates: set[str] = set()
+    if not PRICES_FILE.exists():
+        return [], {}
+    with PRICES_FILE.open() as f:
+        for row in csv.DictReader(f):
+            d, t, c = row["date"], row["ticker"], float(row["close"])
+            prices.setdefault(t, {})[d] = c
+            dates.add(d)
+    return sorted(dates), prices
 
 
 def load_comparison() -> list[dict]:
@@ -97,9 +112,29 @@ def main() -> None:
     with (API_DIR / "latest.json").open("w") as f:
         json.dump(latest, f, indent=2, ensure_ascii=False)
 
-    # Export current constituents
+    # Export current constituents, enriched with latest price + daily change
     with latest_constituents_file().open() as f:
         constituents = json.load(f)
+
+    dates, prices = load_prices()
+    if dates:
+        latest_price_date = dates[-1]
+        prev_price_date = dates[-2] if len(dates) >= 2 else None
+        constituents["price_snapshot"] = {
+            "latest_date": latest_price_date,
+            "prev_date": prev_price_date,
+        }
+        for c in constituents.get("constituents", []):
+            t = c["ticker"]
+            latest_px = prices.get(t, {}).get(latest_price_date)
+            prev_px = prices.get(t, {}).get(prev_price_date) if prev_price_date else None
+            c["latest_price"] = round(latest_px, 2) if latest_px is not None else None
+            if latest_px is not None and prev_px:
+                change_pct = (latest_px / prev_px - 1) * 100
+                c["day_change_pct"] = round(change_pct, 2)
+            else:
+                c["day_change_pct"] = None
+
     with (API_DIR / "constituents.json").open("w") as f:
         json.dump(constituents, f, indent=2, ensure_ascii=False)
 
