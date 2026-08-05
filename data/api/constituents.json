@@ -95,7 +95,7 @@
       "scarcity": "core_scarcity",
       "shovel_vs_gold": "shovel",
       "endgame_view": "endgame_candidate",
-      "note": "Baseline universe marks TSM as Watch tier with 0-8% range; Index includes it as a Bridge position (10%) to reflect its core scarcity as the physical manufacturing base for AI compute.",
+      "note": "Baseline universe 将 TSM 标为 Watch 层（0-8% 权重区间），Index 显式给予 Bridge 位 10% 权重，反映其作为 AI 算力物理制造底座的核心稀缺性。",
       "role": "先进制程与先进封装（CoWoS/SoIC）制造底座",
       "watch_reason": "AI芯片能否继续放量的物理约束；HPC收入占比与CoWoS供需是先行信号（本次未取finance基线，需补研）",
       "stack_layers": [
