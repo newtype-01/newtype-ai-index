@@ -49,6 +49,7 @@ jobs:
                   data/benchmarks/comparison.csv \
                   data/api/latest.json \
                   data/api/constituents.json \
+                  data/api/history.json \
                   charts/nav-comparison.png
           if git diff --cached --quiet; then
             echo "No changes to commit."

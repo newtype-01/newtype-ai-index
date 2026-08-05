@@ -1,0 +1,70 @@
+{
+  "entries": [
+    {
+      "effective_date": "2026-07-17",
+      "as_of": "2026-07-19",
+      "kind": "inception",
+      "label": "建仓",
+      "constituent_count": 7,
+      "total_weight": 1.0,
+      "core_weight": 0.66,
+      "n_stack_weight": 0.24,
+      "bridge_weight": 0.1,
+      "constituents": [
+        {
+          "ticker": "NVDA",
+          "weight": 0.22,
+          "tier": "Core",
+          "primary_layer": 4,
+          "layer_name": "Compute Hardware"
+        },
+        {
+          "ticker": "MU",
+          "weight": 0.22,
+          "tier": "Core",
+          "primary_layer": 3,
+          "layer_name": "Interconnect & Memory"
+        },
+        {
+          "ticker": "VRT",
+          "weight": 0.22,
+          "tier": "Core",
+          "primary_layer": 2,
+          "layer_name": "Infrastructure"
+        },
+        {
+          "ticker": "CEG",
+          "weight": 0.12,
+          "tier": "N-Stack",
+          "primary_layer": 1,
+          "layer_name": "Energy"
+        },
+        {
+          "ticker": "TSM",
+          "weight": 0.1,
+          "tier": "Bridge",
+          "primary_layer": 4,
+          "layer_name": "Compute Hardware"
+        },
+        {
+          "ticker": "MRVL",
+          "weight": 0.06,
+          "tier": "N-Stack",
+          "primary_layer": 4,
+          "layer_name": "Compute Hardware"
+        },
+        {
+          "ticker": "NBIS",
+          "weight": 0.06,
+          "tier": "N-Stack",
+          "primary_layer": 5,
+          "layer_name": "Cloud / IaaS"
+        }
+      ],
+      "changes_from_previous": null,
+      "source_file": "data/constituents/2026-07-17.json",
+      "source_url": "https://github.com/newtype-01/newtype-ai-index/blob/main/data/constituents/2026-07-17.json"
+    }
+  ],
+  "updated_at_utc": "2026-08-05T15:13:50Z"
+}
