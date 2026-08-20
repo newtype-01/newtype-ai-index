@@ -28,8 +28,8 @@
         3,
         5
       ],
-      "latest_price": 217.56,
-      "day_change_pct": -0.99
+      "latest_price": 216.85,
+      "day_change_pct": -0.33
     },
     {
       "ticker": "MU",
@@ -46,8 +46,8 @@
       "stack_layers": [
         3
       ],
-      "latest_price": 937.1,
-      "day_change_pct": -0.39
+      "latest_price": 974.33,
+      "day_change_pct": 3.97
     },
     {
       "ticker": "VRT",
@@ -64,8 +64,8 @@
       "stack_layers": [
         2
       ],
-      "latest_price": 261.0,
-      "day_change_pct": -4.23
+      "latest_price": 264.63,
+      "day_change_pct": 1.39
     },
     {
       "ticker": "CEG",
@@ -82,8 +82,8 @@
       "stack_layers": [
         1
       ],
-      "latest_price": 274.17,
-      "day_change_pct": 2.75
+      "latest_price": 272.92,
+      "day_change_pct": -0.46
     },
     {
       "ticker": "TSM",
@@ -102,8 +102,8 @@
         4,
         3
       ],
-      "latest_price": 412.09,
-      "day_change_pct": -0.32
+      "latest_price": 416.0,
+      "day_change_pct": 0.95
     },
     {
       "ticker": "MRVL",
@@ -121,8 +121,8 @@
         4,
         3
       ],
-      "latest_price": 237.27,
-      "day_change_pct": 9.85
+      "latest_price": 251.01,
+      "day_change_pct": 5.79
     },
     {
       "ticker": "NBIS",
@@ -139,8 +139,8 @@
       "stack_layers": [
         5
       ],
-      "latest_price": 223.9,
-      "day_change_pct": -9.87
+      "latest_price": 220.11,
+      "day_change_pct": -1.69
     }
   ],
   "totals": {
@@ -158,7 +158,7 @@
     "bridge_weight": 0.1
   },
   "price_snapshot": {
-    "latest_date": "2026-08-19",
-    "prev_date": "2026-08-18"
+    "latest_date": "2026-08-20",
+    "prev_date": "2026-08-19"
   }
 }
