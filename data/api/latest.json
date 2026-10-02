@@ -3,19 +3,19 @@
   "index_ticker": "NTAI",
   "inception_date": "2026-07-17",
   "base_nav": 100.0,
-  "latest_date": "2026-10-01",
-  "latest_nav": 111.9041,
-  "period_return_pct": 11.9,
+  "latest_date": "2026-10-02",
+  "latest_nav": 113.0016,
+  "period_return_pct": 13.0,
   "benchmarks": {
     "SOXX": {
-      "latest": 110.4482,
-      "period_return_pct": 10.45,
-      "excess_pp": 1.46
+      "latest": 112.8572,
+      "period_return_pct": 12.86,
+      "excess_pp": 0.14
     },
     "QQQ": {
-      "latest": 106.7162,
-      "period_return_pct": 6.72,
-      "excess_pp": 5.19
+      "latest": 107.8021,
+      "period_return_pct": 7.8,
+      "excess_pp": 5.2
     }
   },
   "series": [
@@ -342,9 +342,15 @@
       "ntai": 111.9041,
       "soxx": 110.4482,
       "qqq": 106.7162
+    },
+    {
+      "date": "2026-10-02",
+      "ntai": 113.0016,
+      "soxx": 112.8572,
+      "qqq": 107.8021
     }
   ],
-  "updated_at_utc": "2026-10-01T21:37:30Z",
+  "updated_at_utc": "2026-10-02T21:36:44Z",
   "source": "https://github.com/newtype-01/newtype-ai-index",
   "disclaimer": "Research-only. Not investment advice. Weights are model targets, not actual holdings."
 }
