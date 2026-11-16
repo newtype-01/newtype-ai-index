@@ -8,9 +8,9 @@
   "period_return_pct": -13.81,
   "benchmarks": {
     "SOXX": {
-      "latest": 28.6119,
-      "period_return_pct": -71.39,
-      "excess_pp": 57.57
+      "latest": 85.8358,
+      "period_return_pct": -14.16,
+      "excess_pp": 0.35
     },
     "QQQ": {
       "latest": 97.7795,
@@ -490,47 +490,47 @@
     {
       "date": "2026-11-05",
       "ntai": 79.2958,
-      "soxx": 25.2774,
+      "soxx": 75.8322,
       "qqq": 93.0565
     },
     {
       "date": "2026-11-06",
       "ntai": 82.809,
-      "soxx": 26.1647,
+      "soxx": 78.4941,
       "qqq": 94.3581
     },
     {
       "date": "2026-11-09",
       "ntai": 87.068,
-      "soxx": 28.1252,
+      "soxx": 84.3755,
       "qqq": 97.7018
     },
     {
       "date": "2026-11-10",
       "ntai": 84.8045,
-      "soxx": 28.0926,
+      "soxx": 84.2778,
       "qqq": 97.0417
     },
     {
       "date": "2026-11-11",
       "ntai": 90.5814,
-      "soxx": 29.781,
+      "soxx": 89.3429,
       "qqq": 99.2881
     },
     {
       "date": "2026-11-12",
       "ntai": 88.7458,
-      "soxx": 29.7024,
+      "soxx": 89.1071,
       "qqq": 98.9703
     },
     {
       "date": "2026-11-13",
       "ntai": 86.1855,
-      "soxx": 28.6119,
+      "soxx": 85.8358,
       "qqq": 97.7795
     }
   ],
-  "updated_at_utc": "2026-11-14T21:32:27Z",
+  "updated_at_utc": "2026-11-16T04:01:43Z",
   "source": "https://github.com/newtype-01/newtype-ai-index",
   "disclaimer": "Research-only. Not investment advice. Weights are model targets, not actual holdings."
 }

@@ -2,6 +2,11 @@
 
 Index 生死线:任何影响净值计算或成分定义的变更都在这里留痕。
 
+## 2026-11-16 — 校正SOXX拆股后的基准曲线
+
+- 根据[iShares公告](https://www.ishares.com/us/products/239705/ishares-phlx-semiconductor-etf)，SOXX自2026-11-05起按3比1拆股后的价格交易。
+- 计算时将拆股日起的SOXX收盘价换算为拆股前的每份价格，重新生成基准曲线。原始收盘价、成分、NTAI净值和QQQ基准沿用原记录。
+
 ## 2026-08-01 — Initial public commit
 
 - 建立 newtype AI Index(代号 NTAI),起始日 2026-07-17,初始净值 100.0000

@@ -25,6 +25,7 @@ import csv
 import json
 import os
 from datetime import date, datetime
+from math import prod
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -34,10 +35,13 @@ NAV_DIR = ROOT / "data" / "nav"
 BENCH_DIR = ROOT / "data" / "benchmarks"
 BENCH_TICKERS = ("SOXX", "QQQ")
 BASE_NAV = 100.0000
+# Share multipliers effective on the first split-adjusted trading day.
+# SOXX: https://www.ishares.com/us/products/239705/ishares-phlx-semiconductor-etf
+SPLITS = {"SOXX": ((date(2026, 11, 5), 3),)}
 
 
 def load_prices(path: Path) -> tuple[list[date], dict[str, dict[date, float]]]:
-    """Return (sorted_dates, {ticker: {date: close}})."""
+    """Return close prices in inception share units for comparable returns."""
     rows: dict[str, dict[date, float]] = {}
     dates: set[date] = set()
     with path.open() as f:
@@ -45,8 +49,8 @@ def load_prices(path: Path) -> tuple[list[date], dict[str, dict[date, float]]]:
         for row in reader:
             d = datetime.strptime(row["date"], "%Y-%m-%d").date()
             t = row["ticker"]
-            c = float(row["close"])
-            rows.setdefault(t, {})[d] = c
+            split_factor = prod(ratio for effective, ratio in SPLITS.get(t, ()) if effective <= d)
+            rows.setdefault(t, {})[d] = float(row["close"]) * split_factor
             dates.add(d)
     return sorted(dates), rows
 
